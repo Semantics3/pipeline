@@ -1,0 +1,56 @@
+=head1 NAME
+
+Pipeline - Pipelines for map, filters processes. 
+
+=head1 SYNOPSIS
+
+	reduce(
+		fileSource( $ARGV[0] ),
+		pipeline( 
+			step { decode_json $_ },
+			step { $_->{name} },
+			bufferedStep { my @v = sort { $a cmp $b } @$_; \@v } 50,
+			filter { /^A/ },
+			step { $_ =~ s/^A/E/g; $_ },
+		),
+		fileSink( $ARGV[1] )
+	);
+
+=head1 DESCRIPTION
+
+Toolbox for data processing using MAP and REDUCE paradigm. Includes helper methods
+for defining filters...
+
+=over 4
+
+=item fileSource( $filename )
+
+Creates a data source for a file and reads it line by line.
+
+=item step { CODE }
+
+A step in the pipeline. 
+
+=item bufferedStep { CODE }
+
+A step in the pipeline. 
+
+=item filter {CODE}
+
+Adds a filter to the pipeline.
+
+=item pipeline( \&step1, \&step2, ... )
+
+Defines a data source and a set of transformations. Can be passed as
+a datasource to another pipeline.
+
+=item reduce( $src, $pipe, $acc )
+
+Processes stream from pipeline to accumulator function. 
+
+=back
+
+=head2 AUTHOR
+
+Shawn Tan, shawn@semantics3.com
+ 
