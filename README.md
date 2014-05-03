@@ -9,22 +9,22 @@ way these transformation steps are written are similar to how perl takes
 an input for its `map` functon.
 
 
-## Pipeline
+### Pipeline
 
-###`step {CODE}`
+####`step {CODE}`
 
 Implement a transformation step to be taken on the input `$_`. 
 
-###`filter {CONDITION}`
+####`filter {CONDITION}`
 
 Filter out only items in the stream that satisfies CONDITION. 
 
-###`bufferedStep {CODE} $bufferSize`
+####`bufferedStep {CODE} $bufferSize`
 
 Operates on data in bulk, filling up the buffer and making the bulk call every `$bufferSize`.
 Useful for bulk ID lookups in a table.
 
-#Example
+####Example
 
 A simple example to fetch some page data and perform some 
 transformation on it before storing it in another file.
